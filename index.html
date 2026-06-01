@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Sales Page Mastery — Soul-Forged Founders</title>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cardo:ital@1&family=Source+Sans+3:wght@400;600;700&family=Source+Code+Pro&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', sans-serif; background: #F3E8D8; color: #151111; min-height: 100vh; }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #D8BFA3; border-radius: 3px; }
+
+  /* ── Animations ── */
+  @keyframes emberRise {
+    0%   { transform: translateY(0) scale(1); opacity: 0.9; }
+    50%  { opacity: 1; }
+    100% { transform: translateY(-500px) translateX(var(--drift, 20px)) scale(0.3); opacity: 0; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Header ── */
+  .site-header {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #3A2432 0%, #151111 50%, #3A2432 100%);
+    padding: 48px 24px 36px; text-align: center;
+  }
+  .header-inner { position: relative; z-index: 1; }
+  .brand-tag {
+    display: inline-block; padding: 5px 18px;
+    border: 1px solid rgba(184,137,45,0.4); border-radius: 20px;
+    font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: #B8892D; margin-bottom: 18px;
+  }
+  .site-title {
+    font-family: 'Marcellus', serif; font-size: clamp(28px, 5vw, 42px);
+    color: #F3E8D8; margin: 0 0 10px; line-height: 1.2;
+  }
+  .site-subtitle {
+    font-family: 'Cardo', serif; font-style: italic;
+    font-size: clamp(15px, 2.5vw, 18px); color: #C56A38;
+    max-width: 500px; margin: 0 auto;
+  }
+
+  /* ── Tab Nav ── */
+  .tab-nav {
+    background: #151111; border-bottom: 2px solid rgba(184,137,45,0.3);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .tab-nav-inner { display: flex; min-width: max-content; padding: 0 12px; }
+  .tab-btn {
+    background: none; border: none;
+    border-bottom: 3px solid transparent;
+    padding: 14px 18px 12px;
+    font-family: 'Source Sans 3', sans-serif; font-size: 14px; font-weight: 400;
+    color: #8E9B8A; cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+  }
+  .tab-btn.active { border-bottom-color: #A8322D; color: #F3E8D8; font-weight: 700; }
+  .tab-btn:hover:not(.active) { color: #D8BFA3; }
+
+  /* ── Content Area ── */
+  .content-area {
+    max-width: 880px; margin: 0 auto; padding: 36px 24px 60px;
+    animation: fadeUp 0.35s ease-out;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeUp 0.35s ease-out; }
+
+  /* ── Typography ── */
+  .section-title {
+    font-family: 'Marcellus', serif; font-size: 24px; color: #151111;
+    margin: 32px 0 20px; padding-bottom: 10px;
+    border-bottom: 2px solid rgba(216,191,163,0.5);
+  }
+  .section-title.no-top { margin-top: 0; }
+  .intro-italic {
+    font-family: 'Cardo', serif; font-style: italic; font-size: 18px;
+    color: #C56A38; line-height: 1.6; margin-bottom: 30px;
+  }
+  code, .code {
+    background: rgba(58,36,50,0.1); padding: 2px 8px; border-radius: 4px;
+    font-family: 'Source Code Pro', 'Courier New', monospace;
+    font-size: 13px; color: #A8322D;
+  }
+
+  /* ── Cards & Grids ── */
+  .steps-grid { display: grid; gap: 16px; margin-bottom: 36px; }
+  .steps-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .steps-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .step-card {
+    background: rgba(243,232,216,0.55); border: 1px solid #D8BFA3;
+    border-radius: 12px; padding: 24px 20px;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .step-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #A8322D, #C56A38, #B8892D);
+  }
+  .step-card .card-icon { font-size: 28px; margin-bottom: 10px; margin-top: 4px; }
+  .step-card .card-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #A8322D, #C56A38);
+    color: #F3E8D8; display: flex; align-items: center; justify-content: center;
+    font-family: 'Marcellus', serif; font-size: 16px; margin-bottom: 12px; flex-shrink: 0;
+  }
+  .step-card h3 {
+    font-family: 'Marcellus', serif; font-size: 17px;
+    color: #151111; margin: 0 0 10px; line-height: 1.3;
+  }
+  .step-card h4 {
+    font-family: 'Marcellus', serif; font-size: 16px;
+    color: #151111; margin: 0 0 8px; line-height: 1.3;
+  }
+  .step-card p {
+    font-size: 14px; color: #151111; line-height: 1.6; margin: 0; opacity: 0.85;
+  }
+
+  /* ── Callout ── */
+  .callout {
+    border-radius: 0 10px 10px 0; padding: 18px 22px;
+    margin: 20px 0; font-size: 15px; line-height: 1.7;
+  }
+  .callout.tip       { background: rgba(184,137,45,0.12); border-left: 3px solid #B8892D; }
+  .callout.important  { background: rgba(168,50,45,0.1);  border-left: 3px solid #A8322D; }
+  .callout.note       { background: rgba(142,155,138,0.15); border-left: 3px solid #8E9B8A; }
+  .callout.warning    { background: rgba(58,36,50,0.1);   border-left: 3px solid #3A2432; }
+
+  /* ── Prompt Block ── */
+  .prompt-block {
+    background: #3A2432; border-radius: 12px;
+    padding: 28px; margin: 20px 0 16px;
+  }
+  .prompt-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+  }
+  .prompt-label {
+    font-weight: 700; font-size: 13px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #B8892D;
+  }
+  .prompt-text {
+    font-family: 'Source Code Pro', 'Courier New', monospace;
+    font-size: 13.5px; color: #F3E8D8; line-height: 1.75;
+    white-space: pre-wrap; word-break: break-word; margin: 0; opacity: 0.92;
+  }
+  .copy-btn {
+    background: #A8322D; color: #F3E8D8; border: none;
+    padding: 10px 22px; border-radius: 6px;
+    font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 14px;
+    cursor: pointer; transition: all 0.3s ease; letter-spacing: 0.5px; white-space: nowrap;
+  }
+  .copy-btn:hover { opacity: 0.9; }
+  .copy-btn.copied { background: #8E9B8A; }
+
+  /* ── Question Card ── */
+  .question-card {
+    background: rgba(58,36,50,0.06); border: 1px solid rgba(216,191,163,0.7);
+    border-radius: 12px; padding: 24px 28px; margin-bottom: 16px;
+  }
+  .question-inner { display: flex; gap: 14px; align-items: flex-start; }
+  .question-num {
+    font-family: 'Marcellus', serif; font-size: 28px;
+    color: #A8322D; line-height: 1; min-width: 30px;
+  }
+  .question-q {
+    font-family: 'Marcellus', serif; font-size: 18px;
+    color: #151111; margin: 0 0 8px; line-height: 1.4;
+  }
+  .question-detail {
+    font-family: 'Cardo', serif; font-style: italic;
+    font-size: 15px; color: #C56A38; margin: 0; line-height: 1.6;
+  }
+
+  /* ── Refine Step Card ── */
+  .refine-step {
+    background: rgba(243,232,216,0.55); border: 1px solid #D8BFA3;
+    border-radius: 12px; padding: 24px 26px; margin-bottom: 18px;
+    position: relative; overflow: hidden;
+  }
+  .refine-step::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+    background: linear-gradient(to bottom, #A8322D, #C56A38, #B8892D);
+  }
+  .refine-step-inner { display: flex; align-items: flex-start; gap: 14px; }
+  .refine-step-num {
+    min-width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #A8322D, #C56A38);
+    color: #F3E8D8; display: flex; align-items: center; justify-content: center;
+    font-family: 'Marcellus', serif; font-size: 16px; flex-shrink: 0;
+  }
+  .refine-step-body { flex: 1; }
+  .refine-step-body h4 {
+    font-family: 'Marcellus', serif; font-size: 18px;
+    color: #151111; margin: 0 0 8px;
+  }
+  .refine-step-body p { font-size: 15px; line-height: 1.7; margin: 0 0 8px; }
+  .refine-step-body p:last-child { margin-bottom: 0; }
+
+  /* ── Sub-Tabs (Refine) ── */
+  .sub-tab-nav {
+    display: flex; gap: 6px; margin-bottom: 28px;
+    border-bottom: 2px solid rgba(216,191,163,0.4);
+  }
+  .sub-tab-btn {
+    background: transparent; border: none;
+    border-bottom: 3px solid transparent;
+    padding: 12px 20px 10px; cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif; font-size: 14px; font-weight: 400;
+    color: #8E9B8A; transition: all 0.25s ease; border-radius: 8px 8px 0 0;
+  }
+  .sub-tab-btn.active {
+    background: rgba(168,50,45,0.1); border-bottom-color: #A8322D;
+    color: #A8322D; font-weight: 700;
+  }
+  .sub-tab-btn:hover:not(.active) { color: #C56A38; }
+  .sub-panel { display: none; }
+  .sub-panel.active { display: block; animation: fadeUp 0.3s ease-out; }
+
+  /* ── Dark Card (Free Plan, Finale) ── */
+  .dark-card {
+    background: linear-gradient(135deg, #3A2432 0%, #151111 100%);
+    border-radius: 14px; padding: 32px; margin-top: 8px;
+  }
+  .dark-card h3 {
+    font-family: 'Marcellus', serif; font-size: 22px;
+    color: #F3E8D8; margin: 0 0 18px;
+  }
+  .dark-card-body { font-size: 15px; color: #D8BFA3; line-height: 1.8; }
+  .dark-card-body p { margin: 0 0 14px; }
+  .dark-card-body .bullet { padding-left: 16px; margin: 0 0 10px; }
+  .dark-card-body .bullet:last-child { margin-bottom: 0; }
+  .dark-card-body strong { color: #F3E8D8; }
+  .accent { color: #B8892D; }
+
+  /* ── Checklist ── */
+  .checklist-card {
+    background: rgba(58,36,50,0.06); border: 1px solid rgba(216,191,163,0.7);
+    border-radius: 12px; padding: 24px 28px; margin-bottom: 20px;
+  }
+  .checklist-card h4 {
+    font-family: 'Marcellus', serif; font-size: 17px;
+    color: #151111; margin: 0 0 14px;
+  }
+  .checklist-item { font-size: 15px; line-height: 2; }
+
+  /* ── Code URL Block ── */
+  .url-block {
+    background: #3A2432; border-radius: 8px; padding: 14px 20px;
+    font-family: 'Source Code Pro', 'Courier New', monospace;
+    font-size: 14px; color: #B8892D; margin-top: 8px;
+  }
+
+  /* ── Finale ── */
+  .finale {
+    background: linear-gradient(135deg, #3A2432 0%, #151111 100%);
+    border-radius: 14px; padding: 32px; margin-top: 28px; text-align: center;
+  }
+  .finale-title {
+    font-family: 'Marcellus', serif; font-size: 24px;
+    color: #F3E8D8; margin: 0 0 12px;
+  }
+  .finale-sub {
+    font-family: 'Cardo', serif; font-style: italic;
+    font-size: 17px; color: #B8892D; margin: 0;
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    background: #151111; padding: 20px 24px; text-align: center;
+    font-size: 12px; color: #8E9B8A; letter-spacing: 0.5px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 800px) {
+    .steps-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid.cols-3 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 500px) {
+    .steps-grid.cols-4 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     HEADER
+     ════════════════════════════════════════════════════ -->
+<header class="site-header" id="embersContainer">
+  <div class="header-inner">
+    <div class="brand-tag">Soul-Forged Founders</div>
+    <h1 class="site-title">AI Sales Page Mastery</h1>
+    <p class="site-subtitle">Your voice. A template. Claude. One sales page, built from your soul.</p>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════
+     TAB NAVIGATION
+     ════════════════════════════════════════════════════ -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="overview"><span>✦</span> Overview</button>
+    <button class="tab-btn" data-tab="record"><span>🎙</span> Record Your Answers</button>
+    <button class="tab-btn" data-tab="upload"><span>⚡</span> Upload &amp; Build</button>
+    <button class="tab-btn" data-tab="refine"><span>🔥</span> Refine Your Page</button>
+    <button class="tab-btn" data-tab="launch"><span>🚀</span> Download &amp; Host</button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════
+     CONTENT AREA
+     ════════════════════════════════════════════════════ -->
+<main class="content-area">
+
+<!-- ──────────────────────────────────────────────
+     TAB: OVERVIEW
+     ────────────────────────────────────────────── -->
+<section class="tab-panel active" id="panel-overview">
+  <p class="intro-italic">Build a beautiful, high-converting sales page for your offer using nothing but your voice, a template, and Claude AI.</p>
+
+  <h2 class="section-title">The Four Steps</h2>
+
+  <div class="steps-grid cols-4">
+    <div class="step-card">
+      <div class="card-icon">🎙</div>
+      <div class="card-num">1</div>
+      <h3>Record Your Answers</h3>
+      <p>Open a voice memo or Loom and answer eight questions about your offer. No scripts. Just talk about what you do.</p>
+    </div>
+    <div class="step-card">
+      <div class="card-icon">⚡</div>
+      <div class="card-num">2</div>
+      <h3>Upload &amp; Build</h3>
+      <p>Drop your transcript, the sales page template, and the prompt into one Claude chat. Claude builds your complete first draft.</p>
+    </div>
+    <div class="step-card">
+      <div class="card-icon">🔥</div>
+      <div class="card-num">3</div>
+      <h3>Refine Your Page</h3>
+      <p>Read your draft. Record your feedback. Start a fresh chat and let Claude polish it section by section.</p>
+    </div>
+    <div class="step-card">
+      <div class="card-icon">🚀</div>
+      <div class="card-num">4</div>
+      <h3>Download &amp; Host</h3>
+      <p>Download your finished HTML file and host it for free on GitHub Pages. Live URL in under five minutes.</p>
+    </div>
+  </div>
+
+  <div class="dark-card">
+    <h3>Using Claude's Free Plan</h3>
+    <div class="dark-card-body">
+      <p>This entire workflow works on <strong>Claude's free tier</strong>. The sales page template is a larger file, so Claude needs a little room to work with it. The only difference between free and Pro is <strong>how fast you can move through the steps</strong>. The finished page is the same either way.</p>
+      <p class="bullet"><span class="accent">✦</span> <strong>One task per chat.</strong> Don't reuse the same chat for multiple steps. Keep each step in its own conversation.</p>
+      <p class="bullet"><span class="accent">✦</span> <strong>Start fresh for every refinement round.</strong> Download your file, open a brand new chat, and upload the latest version. This keeps your context window small and your results sharp.</p>
+      <p class="bullet"><span class="accent">✦</span> <strong>Batch your feedback.</strong> Don't send 12 small change requests. Record everything you want changed in one pass, then send it all at once.</p>
+      <p class="bullet"><span class="accent">✦</span> <strong>Free plan resets every 5 hours.</strong> If you run out of messages, just wait for the reset and pick up where you left off. You won't lose anything. Just start a new chat with your latest file.</p>
+      <p class="bullet"><span class="accent">✦</span> <strong>Use the artifact download button.</strong> When Claude generates your page as an artifact, use the download button directly. That's your HTML file.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────
+     TAB: RECORD YOUR ANSWERS
+     ────────────────────────────────────────────── -->
+<section class="tab-panel" id="panel-record">
+  <p class="intro-italic" style="margin-bottom:10px">Open your voice memo app or Loom and answer these eight questions about your offer. Talk naturally. The more detail, the better your sales page will be.</p>
+
+  <div class="callout tip"><span>✦</span> Don't overthink it. Pretend you're telling a friend about what you do over coffee. Claude works best with your raw, unfiltered voice. Aim for 5 to 15 minutes total. If you get stuck on any question, just mention it in your recording and ask Claude to make suggestions or fill in the blanks for you.</div>
+
+  <div class="callout note"><span>📌</span> A heads up: when you get to the questions about what you do and what makes you different, lean into the <strong>transformation</strong> your client experiences, not the modalities you use to get there. It's okay to mention your tools and training, but your sales page will be strongest when it leads with what <em>shifts</em> for the person sitting across from you.</div>
+
+  <h2 class="section-title">Your Eight Questions</h2>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">1</span>
+      <div>
+        <p class="question-q">What is your offer and who is it for?</p>
+        <p class="question-detail">Describe your session, service, or program in your own words. Who is the specific person it's designed to help? Paint a picture of them.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">2</span>
+      <div>
+        <p class="question-q">What is the core transformation or outcome?</p>
+        <p class="question-detail">What does your client walk away with? What shifts for them? Describe the before and after. If you can, list 3 to 5 specific outcomes. These will fill the outcomes section of your sales page, so the more specific you are here, the stronger that section will be.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">3</span>
+      <div>
+        <p class="question-q">What are the 5 to 7 biggest frustrations your ideal client is dealing with right now?</p>
+        <p class="question-detail">Get specific. What keeps them stuck? What have they already tried that didn't work? What are they sick of hearing?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">4</span>
+      <div>
+        <p class="question-q">What does your session or service actually include, and how is it delivered?</p>
+        <p class="question-detail">Walk through what happens step by step. What do they get? Is it over Zoom, in person, Voxer, a portal? How long is it? How many sessions? Describe the full experience from their side.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">5</span>
+      <div>
+        <p class="question-q">What questions do people ask before they book or buy?</p>
+        <p class="question-detail">Think about the DMs, the emails, the hesitations. What do they need to know before they say yes?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">6</span>
+      <div>
+        <p class="question-q">What makes your approach different from everyone else doing something similar?</p>
+        <p class="question-detail">This is your edge. Your philosophy, your method, your lived experience. What do you bring that nobody else can?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">7</span>
+      <div>
+        <p class="question-q">What is your method, framework, or signature process called?</p>
+        <p class="question-detail">If you've named it, tell us. If you haven't yet, describe the steps you take clients through. Walk us through your process from start to finish.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <div class="question-inner">
+      <span class="question-num">8</span>
+      <div>
+        <p class="question-q">Do you have any testimonials or client results to share?</p>
+        <p class="question-detail">Read them out loud or paraphrase what past clients have said. Include their name if you have permission. If you don't have testimonials yet, just say so. You can choose to skip that section or have Claude write placeholders you'll swap out later.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout note"><span>📌</span> Once you're done recording, get your transcript. If you used a voice memo app, upload the audio to a free transcription tool (Otter.ai, TurboScribe, or even Claude). If you used Loom, grab the auto-generated transcript. Save it as a text file or keep it in your clipboard for the next step.</div>
+</section>
+
+<!-- ──────────────────────────────────────────────
+     TAB: UPLOAD & BUILD
+     ────────────────────────────────────────────── -->
+<section class="tab-panel" id="panel-upload">
+  <p class="intro-italic" style="margin-bottom:28px">Three ingredients. One chat. Your first draft, built.</p>
+
+  <h2 class="section-title">What to Upload</h2>
+
+  <div class="steps-grid cols-3" style="margin-bottom:8px">
+    <div class="step-card">
+      <div class="card-icon">📄</div>
+      <div class="card-num">1</div>
+      <h3>The Sales Page Template</h3>
+      <p>Download the HTML sales page template provided in this course. This is the design foundation Claude will build on. Upload this file directly into your Claude chat.</p>
+    </div>
+    <div class="step-card">
+      <div class="card-icon">🎙</div>
+      <div class="card-num">2</div>
+      <h3>Your Voice Transcript</h3>
+      <p>Paste your full transcript from Step 1 into the same message. This is the raw content Claude will use to fill in every section of your page.</p>
+    </div>
+    <div class="step-card">
+      <div class="card-icon">✦</div>
+      <div class="card-num">3</div>
+      <h3>The Prompt</h3>
+      <p>Copy the prompt below and paste it into the same chat message, along with your template and transcript. Send it all together in one go.</p>
+    </div>
+  </div>
+
+  <div class="callout important"><span>🔥</span> All three go into a <strong>single message</strong> in a <strong>single chat</strong>. Upload the template file, paste your transcript, and paste the prompt. Then hit send. Claude will return your complete first draft as a downloadable artifact.</div>
+
+  <h2 class="section-title">Your Build Prompt</h2>
+
+  <div class="prompt-block">
+    <div class="prompt-header">
+      <span class="prompt-label">Copy this entire prompt</span>
+      <button class="copy-btn" data-prompt="build">Copy Prompt</button>
+    </div>
+    <pre class="prompt-text">I'm attaching a sales page HTML template and a transcript where I share all the details about my offer.
+
+Take the template and produce a complete sales page with all placeholder content replaced by real copy based on my transcript.
+
+Use my tone of voice and the content from my transcript. Keep the copy at a 6th grade reading level, conversational and grounded. No hype, no em dashes, no filler.
+
+Important: Focus the copy on the transformation and outcomes for the client, not the modalities or tools I use to get there. The reader should feel what changes for them, not read a list of techniques, certifications, or methodologies. If I mention modalities in the transcript, they can appear briefly as supporting context, but the copy should always lead with the shift, the result, and the experience the client walks away with.
+
+Fill in every section of the template: the hero, the "made for you if" qualifier cards, pain points, the outcomes section (what shifts after the session), features and what you get, how it works, the Meet Your Name story section, testimonials, FAQ, the comparison section, and every CTA.
+
+For the testimonials section: if I provide real testimonials in my transcript, use them. If I say I want to skip the testimonials section, remove it from the page. If I don't mention testimonials at all, write realistic placeholder testimonials based on the transformation I described and add a note that I should replace them with real ones later.
+
+For any mockup or image placeholder sections, generate gorgeous placeholder content that presents my offer based on what I described in the transcript.
+
+Produce the complete finished HTML file with all the copy written from my transcript.</pre>
+  </div>
+
+  <div class="callout tip"><span>✦</span> After Claude generates your page, click the <strong>download button</strong> on the artifact to save your HTML file. Open it in your browser to preview it. This is your Version 1.</div>
+</section>
+
+<!-- ──────────────────────────────────────────────
+     TAB: REFINE YOUR PAGE
+     ────────────────────────────────────────────── -->
+<section class="tab-panel" id="panel-refine">
+  <p class="intro-italic" style="margin-bottom:16px">Your first draft is done. Now let's make it yours. Three refinement passes, each in a fresh chat, each with its own focus.</p>
+
+  <div class="callout important"><span>🔥</span> <strong>The golden rule: one round of changes, one new chat.</strong> Every time you refine, download the latest version, open a fresh Claude conversation, and upload it there. This keeps your context clean and your free plan tokens stretching further.</div>
+
+  <!-- Sub-tab navigation -->
+  <div class="sub-tab-nav">
+    <button class="sub-tab-btn active" data-subtab="copy"><span>✍️</span> Copy Feedback</button>
+    <button class="sub-tab-btn" data-subtab="mockups"><span>🖼</span> Mockups &amp; Photos</button>
+    <button class="sub-tab-btn" data-subtab="links"><span>🔗</span> Links &amp; Footer</button>
+  </div>
+
+  <!-- SUB-PANEL: Copy Feedback -->
+  <div class="sub-panel active" id="subpanel-copy">
+    <h2 class="section-title no-top">Copy Feedback Workflow</h2>
+
+    <div class="steps-grid cols-4" style="margin-bottom:8px">
+      <div class="step-card">
+        <div class="card-icon" style="font-size:26px">👁</div>
+        <div class="card-num" style="width:30px;height:30px;font-size:15px">1</div>
+        <h4>Read Version One</h4>
+        <p style="font-size:13.5px">Open your downloaded HTML file in your browser and read through every section. Notice what sounds like you and what doesn't. Catch anything off, missing, or needing more personality.</p>
+      </div>
+      <div class="step-card">
+        <div class="card-icon" style="font-size:26px">🎙</div>
+        <div class="card-num" style="width:30px;height:30px;font-size:15px">2</div>
+        <h4>Record Feedback in One Pass</h4>
+        <p style="font-size:13.5px">Open a voice memo and walk through your page section by section. Say everything you want changed in a single recording. Be specific about what to change and what you'd rather it say.</p>
+      </div>
+      <div class="step-card">
+        <div class="card-icon" style="font-size:26px">💬</div>
+        <div class="card-num" style="width:30px;height:30px;font-size:15px">3</div>
+        <h4>Start a New Chat</h4>
+        <p style="font-size:13.5px">Do not go back to your original chat. Open a fresh Claude conversation. This keeps Claude focused and saves your tokens.</p>
+      </div>
+      <div class="step-card">
+        <div class="card-icon" style="font-size:26px">📎</div>
+        <div class="card-num" style="width:30px;height:30px;font-size:15px">4</div>
+        <h4>Upload + Paste Prompt</h4>
+        <p style="font-size:13.5px">Upload your current HTML file and paste the copy feedback prompt below with your transcribed feedback. Send it all together.</p>
+      </div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <span class="prompt-label">Copy Feedback Prompt</span>
+        <button class="copy-btn" data-prompt="copy">Copy Prompt</button>
+      </div>
+      <pre class="prompt-text">Here is my sales page (attached). Below is my voice feedback transcript with every copy change I want.
+
+Go section by section and apply each change exactly as I describe it. Keep everything I did not mention the same. Keep the copy conversational and at a 6th grade reading level. No hype, no em dashes.
+
+Produce the complete updated HTML file.
+
+[PASTE YOUR VOICE FEEDBACK TRANSCRIPT HERE]</pre>
+    </div>
+
+    <div class="callout tip"><span>✦</span> Most pages only need 1 to 2 rounds of copy refinement to feel dialed in. If something still feels off after round 2, focus your third pass on just that one section.</div>
+  </div>
+
+  <!-- SUB-PANEL: Mockups & Photos -->
+  <div class="sub-panel" id="subpanel-mockups">
+    <h2 class="section-title no-top">Mockups &amp; Photos</h2>
+    <p style="font-size:15.5px;line-height:1.7;margin-bottom:20px">Your first draft has placeholder visuals. This is where you swap them for your own mockups, headshots, product images, or branded graphics.</p>
+
+    <div class="steps-grid cols-3" style="margin-bottom:8px">
+      <div class="step-card">
+        <div class="card-icon" style="font-size:26px">📸</div>
+        <div class="card-num" style="width:30px;height:30px;font-size:15px">1</div>
+        <h4>Gather Your Visuals</h4>
+        <p style="font-size:13.5px">Collect the images you want on your page: mockups of your offer, photos of you, branded graphics, screenshots. Have the image URLs or files ready.</p>
+      </div>
+      <div class="step-card">
+        <div class="card-icon" style="font-size:26px">✏️</div>
+        <div class="card-num" style="width:30px;height:30px;font-size:15px">2</div>
+        <h4>Describe Your Changes</h4>
+        <p style="font-size:13.5px">Be specific about what goes where. "Replace the hero image with my headshot." "Swap the mockup section with this product screenshot." "Use this URL for the editorial section."</p>
+      </div>
+      <div class="step-card">
+        <div class="card-icon" style="font-size:26px">📎</div>
+        <div class="card-num" style="width:30px;height:30px;font-size:15px">3</div>
+        <h4>New Chat, Upload, Prompt</h4>
+        <p style="font-size:13.5px">Same golden rule. Fresh chat. Upload your latest HTML file. Paste the prompt below with your image instructions.</p>
+      </div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <span class="prompt-label">Mockups &amp; Photos Prompt</span>
+        <button class="copy-btn" data-prompt="mockups">Copy Prompt</button>
+      </div>
+      <pre class="prompt-text">Here is my sales page (attached). I want to update the mockup and photo sections.
+
+[DESCRIBE YOUR CHANGES: which images to replace, what the new mockups should show, any photo descriptions or image URLs you want used]
+
+Keep all copy and layout exactly the same. Only update the visual and image elements I've described. Produce the complete updated HTML file.</pre>
+    </div>
+  </div>
+
+  <!-- SUB-PANEL: Links & Footer -->
+  <div class="sub-panel" id="subpanel-links">
+    <h2 class="section-title no-top">Links &amp; Footer</h2>
+
+    <div class="callout warning"><span>⚖️</span> <strong>This is not legal advice.</strong> You are responsible for knowing what legal pages are required for your business in your region and making sure they are accurate and up to date.</div>
+
+    <p style="font-size:15.5px;line-height:1.7;margin-bottom:20px">Before you run this final pass, have the following ready:</p>
+
+    <div class="checklist-card">
+      <h4>Have These Ready</h4>
+      <div class="checklist-item"><span class="accent">✦</span>&ensp;Your checkout or buy button URL</div>
+      <div class="checklist-item"><span class="accent">✦</span>&ensp;Your business or company name</div>
+      <div class="checklist-item"><span class="accent">✦</span>&ensp;Your contact email</div>
+      <div class="checklist-item"><span class="accent">✦</span>&ensp;Your Privacy Policy link</div>
+      <div class="checklist-item"><span class="accent">✦</span>&ensp;Your Terms of Service link</div>
+      <div class="checklist-item"><span class="accent">✦</span>&ensp;Your Disclaimer link</div>
+      <div class="checklist-item"><span class="accent">✦</span>&ensp;Your Cookie Policy link (if applicable)</div>
+    </div>
+
+    <div class="refine-step">
+      <div class="refine-step-inner">
+        <div class="refine-step-num">1</div>
+        <div class="refine-step-body">
+          <h4>Start a New Chat</h4>
+          <p>Fresh conversation. Upload the latest version of your HTML file.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="refine-step">
+      <div class="refine-step-inner">
+        <div class="refine-step-num">2</div>
+        <div class="refine-step-body">
+          <h4>Paste the Prompt With Your Links</h4>
+          <p>Fill in each field in the prompt below with your actual URLs and info, then paste it into the chat.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-header">
+        <span class="prompt-label">Links &amp; Footer Prompt</span>
+        <button class="copy-btn" data-prompt="links">Copy Prompt</button>
+      </div>
+      <pre class="prompt-text">Here is the current version of my sales page (attached). Please wire up all the final links and footer details:
+
+CTA / Buy Button URL: [YOUR CHECKOUT LINK]
+Footer Company Name: [YOUR BUSINESS NAME]
+Footer Contact Email: [YOUR EMAIL]
+Footer Privacy Policy Link: [YOUR PRIVACY POLICY URL]
+Footer Terms of Service Link: [YOUR TERMS URL]
+Footer Disclaimer Link: [YOUR DISCLAIMER URL]
+Footer Cookie Policy Link: [YOUR COOKIE POLICY URL]
+
+Keep all copy, images, and layout exactly the same. Produce the complete final HTML file.</pre>
+    </div>
+
+    <div class="callout tip"><span>✦</span> After this step, your page is ready to host. Download the final file and head to the Download &amp; Host tab.</div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────
+     TAB: DOWNLOAD & HOST
+     ────────────────────────────────────────────── -->
+<section class="tab-panel" id="panel-launch">
+  <p class="intro-italic" style="margin-bottom:28px">Your page is polished. Time to put it on the internet. GitHub Pages hosts your sales page for free with a live URL you can share anywhere.</p>
+
+  <h2 class="section-title">Host on GitHub Pages</h2>
+
+  <div class="refine-step">
+    <div class="refine-step-inner">
+      <div class="refine-step-num">1</div>
+      <div class="refine-step-body">
+        <h4>Create a GitHub Account</h4>
+        <p>Go to <strong style="color:#A8322D">github.com</strong> and sign up for a free account if you don't already have one. Confirm your email and you're in.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="refine-step">
+    <div class="refine-step-inner">
+      <div class="refine-step-num">2</div>
+      <div class="refine-step-body">
+        <h4>Create a New Repository</h4>
+        <p>Click the <strong>+</strong> in the top right corner and select <strong>"New repository."</strong></p>
+        <p>Name it something related to your offer (e.g., <code>my-coaching-sales-page</code>). This name becomes part of your URL.</p>
+        <p>Set it to <strong>Public</strong>.</p>
+        <p>Click <strong>"Create repository."</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="refine-step">
+    <div class="refine-step-inner">
+      <div class="refine-step-num">3</div>
+      <div class="refine-step-body">
+        <h4>Upload Your HTML File</h4>
+        <p>On your repository page, click <strong>"uploading an existing file"</strong> (or the "Add file" dropdown, then "Upload files").</p>
+        <p>Drag your final HTML file into the upload area. <strong style="color:#A8322D">Important:</strong> rename your file to <code>index.html</code> before uploading. This tells GitHub it's your main page.</p>
+        <p>Click <strong>"Commit changes."</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="refine-step">
+    <div class="refine-step-inner">
+      <div class="refine-step-num">4</div>
+      <div class="refine-step-body">
+        <h4>Turn on GitHub Pages</h4>
+        <p>Go to your repository's <strong>Settings</strong> tab (the gear icon).</p>
+        <p>In the left sidebar, click <strong>"Pages."</strong></p>
+        <p>Under <strong>"Branch,"</strong> select <strong>main</strong> from the dropdown. Leave the folder as <strong>/ (root)</strong>.</p>
+        <p>Click <strong>"Save."</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="refine-step">
+    <div class="refine-step-inner">
+      <div class="refine-step-num">5</div>
+      <div class="refine-step-body">
+        <h4>Grab Your Live URL</h4>
+        <p style="margin-bottom:10px">Give it a minute or two. Refresh the Pages settings page and your live URL will appear at the top:</p>
+        <div class="url-block">https://yourusername.github.io/my-coaching-sales-page</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip"><span>✦</span> That URL is your live sales page. Link it from your Linktree, email signature, Instagram bio, Skool community, checkout page... anywhere. To update the page later, just upload a new <code>index.html</code> file to the same repository and it'll update automatically.</div>
+
+  <div class="finale">
+    <p class="finale-title">Your sales page is live. ✦</p>
+    <p class="finale-sub">Now go share it with the people it was made for.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════ -->
+<footer class="site-footer">© 2026 S Sink Coaching ✦ Soul-Forged Founders</footer>
+
+<!-- ════════════════════════════════════════════════════
+     JAVASCRIPT
+     ════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  /* ── Tab Navigation ── */
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels  = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + target).classList.add('active');
+    });
+  });
+
+  /* ── Sub-Tab Navigation (Refine) ── */
+  const subBtns   = document.querySelectorAll('.sub-tab-btn');
+  const subPanels = document.querySelectorAll('.sub-panel');
+
+  subBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.subtab;
+      subBtns.forEach(b => b.classList.remove('active'));
+      subPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('subpanel-' + target).classList.add('active');
+    });
+  });
+
+  /* ── Copy Buttons ── */
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const block = btn.closest('.prompt-block');
+      const text  = block.querySelector('.prompt-text').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✦ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Prompt';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+  });
+
+  /* ── Floating Embers ── */
+  const container = document.getElementById('embersContainer');
+  const emberColors = ['#C56A38', '#A8322D', '#B8892D'];
+
+  setInterval(() => {
+    const ember = document.createElement('div');
+    const color = emberColors[Math.floor(Math.random() * emberColors.length)];
+    const size  = Math.random() * 3 + 2;
+    const drift = (Math.random() - 0.5) * 60;
+
+    ember.style.cssText = `
+      position: absolute; bottom: -10px; left: ${Math.random() * 100}%;
+      width: ${size}px; height: ${size}px; border-radius: 50%;
+      background: ${color}; box-shadow: 0 0 ${size + 4}px ${color};
+      --drift: ${drift}px;
+      animation: emberRise ${3 + Math.random() * 4}s linear forwards;
+      pointer-events: none; z-index: 0;
+    `;
+    container.appendChild(ember);
+    setTimeout(() => ember.remove(), 7500);
+  }, 350);
+})();
+</script>
+</body>
+</html>
